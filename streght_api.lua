@@ -14,7 +14,7 @@ local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
 local HumanoidRootFrame = Character.HumanoidRootPart 
 
-isStreghtToolUsed = function() --> return an array of the pad that arent used 
+isStrenghtToolUsed = function() --> return an array of the pad that arent used 
     local trainingDevice = {
         ["workspace.Crunches"]    = workspace.Crunches.In_Use.Value;
         ["workspace.Leg_Lift"]    =  workspace.Leg_Lift.In_Use.Value;
