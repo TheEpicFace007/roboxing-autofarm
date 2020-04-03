@@ -15,7 +15,8 @@ local Humanoid = Character.Humanoid
 local HumanoidRootFrame = Character.HumanoidRootPart 
 -- return an array that indicate which training device are used and which are not used
 getgenv().strenghtAuto = {}
-getgenv().timeItRepeat = 1
+getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
+
 isStrenghtToolUsed = function() 
     local trainingDevice = {
         Crunches    = workspace.Crunches.In_Use.Value;
@@ -26,7 +27,11 @@ isStrenghtToolUsed = function()
     return trainingDevice
 end
 
--- @timeItRepeat | time it repeat the auto farm. useful if you want to train on a specific thing  | intended for slider. if its not used the default value will be 1
+-- @timeItRepeat | amount of time it will repat the autofarm useful if you want to train on a specific thing  | intended for slider. if its not used the default value will be 1
 setAmountItWillRepeat = function(timeItRepeat)
-    getgenv().timeItRepeat = 1
+    if timeItRepeat < 1 then 
+        error("error in #1, the number must be equal or bigger than 1")
+    else
+        getgenv().strenghtAuto.timeItRepeat = timeItRepeat
+    end
 end
