@@ -17,6 +17,12 @@ local HumanoidRootFrame = Character.HumanoidRootPart
 getgenv().strenghtAuto = {}
 getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
 
+fireMb1Click = function(btn)
+    for _,signal in pairs( getconnections(btn.MouseButton1Click )) do
+        signal:Fire()
+    end
+end
+
 isStrenghtToolUsed = function() 
     local trainingDevice = {
         Crunches    = workspace.Crunches.In_Use.Value;
@@ -34,4 +40,8 @@ setAmountItWillRepeat = function(timeItRepeat)
     else
         getgenv().strenghtAuto.timeItRepeat = timeItRepeat
     end
+end
+
+doStreghtAutoFarm = function()
+    
 end
