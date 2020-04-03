@@ -14,14 +14,18 @@ local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
 local HumanoidRootFrame = Character.HumanoidRootPart 
 
-getgenv().RobBoxingAutoFarmAPI.strenght = {}
-
-RoBoxingAutoFarmAPI.strenght.indNotUsedStreghtPad = function() --> return an array of the pad that arent used 
-    local trainingToolUse = {
-           workspace.Crunches.In_Use.Value;
-           workspace.Leg_Lift.In_Use.Value;
-        workspace.Squat_Jumps.In_Use.Value;
-           workspace.Push_Ups.In_Use.Value;
+isStreghtToolUsed = function() --> return an array of the pad that arent used 
+    local trainingDevice = {
+        ["workspace.Crunches"]    = workspace.Crunches.In_Use.Value;
+        ["workspace.Leg_Lift"]    =  workspace.Leg_Lift.In_Use.Value;
+        ["workspace.Squat_Jumps"] = workspace.Squat_Jumps.In_Use.Value;
+        ["workspace.Push_Ups"]    = workspace.Push_Ups.In_Use.Value;
     }
-    print(repr( trainingToolUse ))
+    for k,v in pairs(trainingDevice) do
+        if (k.v) == true then
+            table.remove(trainingDevice,k)
+        end
+    end
+    return trainingDevice
 end
+
