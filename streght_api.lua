@@ -13,19 +13,14 @@ local Backpack = LocalPlayer.Backpack
 local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
 local HumanoidRootFrame = Character.HumanoidRootPart 
-
-isStrenghtToolUsed = function() --> return an array of the pad that arent used 
+-- return an array that indicate which training device are used and which are not used
+isStrenghtToolUsed = function() 
     local trainingDevice = {
-        ["workspace.Crunches"]    = workspace.Crunches.In_Use.Value;
-        ["workspace.Leg_Lift"]    =  workspace.Leg_Lift.In_Use.Value;
-        ["workspace.Squat_Jumps"] = workspace.Squat_Jumps.In_Use.Value;
-        ["workspace.Push_Ups"]    = workspace.Push_Ups.In_Use.Value;
+        Crunches    = workspace.Crunches.In_Use.Value;
+        Leg_Lift    =  workspace.Leg_Lift.In_Use.Value;
+        Squat_Jumps = workspace.Squat_Jumps.In_Use.Value;
+        Push_Ups    = workspace.Push_Ups.In_Use.Value;
     }
-    for k,v in pairs(trainingDevice) do
-        if (k.v) == true then
-            table.remove(trainingDevice,k)
-        end
-    end
     return trainingDevice
 end
 
