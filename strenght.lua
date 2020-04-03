@@ -16,12 +16,12 @@ local HumanoidRootFrame = Character.HumanoidRootPart
 
 getgenv().RobBoxingAutoFarmAPI.strenght = {}
 
-RobBoxingAutoFarmAPI.strenght.indNotUsedStreghtPad = function() --> return an array of the pad that arent used 
+RoBoxingAutoFarmAPI.strenght.indNotUsedStreghtPad = function() --> return an array of the pad that arent used 
     local trainingToolUse = {
            workspace.Crunches.In_Use.Value;
            workspace.Leg_Lift.In_Use.Value;
         workspace.Squat_Jumps.In_Use.Value;
            workspace.Push_Ups.In_Use.Value;
     }
-    print
+    print(repr( trainingToolUse ))
 end
