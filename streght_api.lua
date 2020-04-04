@@ -32,16 +32,24 @@ setAmountItWillRepeat = function(timeItRepeat)
     end
 end
 
+destroyBreadcrumb = function()
+    for i,v in pairs( workspace:GetChildren() ) do
+        if v.ClassName == "Folder" and v.Name == "breadcrumb" then
+            v:Destroy()
+        end
+    end
+end
+
 pathfind = function(Position,isShowingBreadcrumb)
     local PathfindingService = game:GetService("PathfindingService");
     path = PathfindingService:CreatePath()
-    if typeof(Position) ~= "Vector" then
+    if typeof(Position) ~= "Vector3" then
         error("ERROR IN #2 : The position must be a Vector",2)
         return
     end
     path:ComputeAsync(HumanoidRootPart.Position,Position)
     waypoints = {}
-    if path.Status == Enum.Status.Success then
+    if path.Status == Enum.PathStatus.Success then
         waypoints = path:GetWaypoints()
             if isShowingBreadcrumb then
                 breadcrumb = Instance.new("Folder",workspace)
@@ -58,19 +66,13 @@ pathfind = function(Position,isShowingBreadcrumb)
 	                part.CanCollide = false
                     part.Parent = game.Workspace.breadcrumb
                 end
-                Humanoid:MoveTo(waypoints.Position)
+                Humanoid:MoveTo(waypoint.Position)
                 Humanoid.MoveToFinished:Wait()
-    end
-
+            end
+            breadcrumb:Destroy()
     else
-        error("Error: path not found",0);
+        error("Error: path not found");
         Humanoid:MoveTo(HumanoidRootPart.Position)
-    end
-end
-
-onPathBlocked = function(blockedWaypointIndex)
-    if blockedWaypointIndex > currentWaypointIndex then
-        pathfind()
     end
 end
 
@@ -92,9 +94,16 @@ doStreghtAutoFarm = function()
             break
         end
     end
-    destination = toolToFarmOn[2]
-    followpath()
+    onPathBlocked = function(blockedWaypointIndex)
+        if blockedWaypointIndex > currentWaypointIndex then
+            if workspace.breadcrumb then
+                workspace.breadcrumb:Destroy()
+            end
+            print( repr( debug.getupvalues(1) ) )
+            pathfind(toolToFarmOn[2])
+        end
+    end
+    pathfind(toolToFarmOn[2],true)
+    path.Blocked:Connect(onPathBlocked)
 end
 doStreghtAutoFarm()
-
-path.Blocked:Connect(onPathBlocked)
