@@ -32,7 +32,7 @@ setAmountItWillRepeat = function(timeItRepeat)
     end
 end
 
-pathfind = function(isShowingBreadcrumb,Position)
+pathfind = function(Position,isShowingBreadcrumb)
     local PathfindingService = game:GetService("PathfindingService");
     path = PathfindingService:CreatePath()
     if typeof(Position) ~= "Vector" then
@@ -63,8 +63,14 @@ pathfind = function(isShowingBreadcrumb,Position)
     end
 
     else
-        error(" Error (path not found)",0);
-        Humanoid:MoveTo(HumanoidRootPart)
+        error("Error: path not found",0);
+        Humanoid:MoveTo(HumanoidRootPart.Position)
+    end
+end
+
+onPathBlocked = function(blockedWaypointIndex)
+    if blockedWaypointIndex > currentWaypointIndex then
+        pathfind()
     end
 end
 
@@ -86,6 +92,9 @@ doStreghtAutoFarm = function()
             break
         end
     end
-
+    destination = toolToFarmOn[2]
+    followpath()
 end
 doStreghtAutoFarm()
+
+path.Blocked:Connect(onPathBlocked)
