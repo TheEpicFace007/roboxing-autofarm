@@ -12,7 +12,7 @@ ReplicatedFirst = game:GetService('ReplicatedFirst')
 Backpack = LocalPlayer.Backpack
 Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
-HumanoidRootPart = Character.HumanoidRootPart 
+HumanoidRootPart = Character.HumanoidRootPart
 -- return an array that indicate which training device are used and which are not used
 getgenv().strenghtAuto = {}
 getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
@@ -25,7 +25,7 @@ end
 
 -- @timeItRepeat | amount of time it will repat the autofarm useful if you want to train on a specific thing  | intended for slider. if its not used the default value will be 1
 setAmountItWillRepeat = function(timeItRepeat)
-    if timeItRepeat < 1 then 
+    if timeItRepeat < 1 then
         error("error in #1, the number must be equal or bigger than 1")
     else
         getgenv().strenghtAuto.timeItRepeat = timeItRepeat
@@ -33,7 +33,7 @@ setAmountItWillRepeat = function(timeItRepeat)
 end
 
 doStreghtAutoFarm = function()
-    trainingDevice = {       
+    trainingDevice = {
        Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047)};
        Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;Vector3.new(-127.155914, 3.69005132, -65.509613)};
        Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;Vector3.new(-113.031052, 3.69005132, -65.5107956)};
@@ -54,7 +54,19 @@ doStreghtAutoFarm = function()
     local path = PathfindingService:CreatePath()
     print( repr( toolToFarmOn ) )
     path:ComputeAsync(HumanoidRootPart.Position,toolToFarmOn[2])
-    path:GetWaypoints()
-
+    local waypoints = path:GetWaypoints()
+    -- Loop through waypoints
+    local strenghtPath = Instance.new("Folder",workspace)
+    strenghtPath.Name = "strenghtPath"
+    for _, waypoint in pairs(waypoints) do
+	    local part = Instance.new("Part")
+	    part.Shape = "Ball"
+	    part.Material = "Neon"
+	    part.Size = Vector3.new(0.6, 0.6, 0.6)
+	    part.Position = waypoint.Position
+	    part.Anchored = true
+	    part.CanCollide = false
+	    part.Parent = game.Workspace.strenghtPath
+    end
 end
 doStreghtAutoFarm()
