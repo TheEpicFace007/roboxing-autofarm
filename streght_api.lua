@@ -33,24 +33,22 @@ setAmountItWillRepeat = function(timeItRepeat)
 end
 
 doStreghtAutoFarm = function()
-    local trainingDevice = {
-        ["workspace.Crunches"]     = {workspace.Crunches.In_Use.Value; CFrame.new(-142.26973, 3.69035339, -64.4220047)};
-        ['workspace.Leg_Lift']     = {workspace.Leg_Lift.In_Use.Value;CFrame.new(-127.155914, 3.69005132, -65.509613)};
-        ['workspace.Squat_Jumps']  = {workspace.Squat_Jumps.In_Use.Value;CFrame.new(-113.031052, 3.69005132, -65.5107956)};
-        ['workspace.Push_Ups']     = {workspace.Push_Ups.In_Use.Value;CFrame.new(-97.0513, 3.69003153, -66.1871414)};
-        ['workspace.Overhead1']    = {workspace.Overhead1.In_Use.Value;CFrame.new(-95.6423416, 3.50129175, 63.8929062)};
-        ['workspace.Bicep1']       = {workspace.Bicep1.In_Use.Value;CFrame.new(-108.193413, 3.50129175, 60.8449173)};
-        ['workspace.Squat1']       = {workspace.Squat1.In_Use.Value;CFrame.new(-118.741066, 3.50129128, 61.4322205)};
-        ['workspace.Bench1']       = {workspace.Bench1.In_Use.Value;CFrame.new(-130.319031, 3.44129109, 57.6213875)};
+    trainingDevice = {       
+       Crunches     = {workspace.Crunches.In_Use.Value   ;CFrame.new(-142.26973, 3.69035339, -64.4220047)};
+       Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;CFrame.new(-127.155914, 3.69005132, -65.509613)};
+       Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;CFrame.new(-113.031052, 3.69005132, -65.5107956)};
+       Push_Ups     = {workspace.Push_Ups.In_Use.Value   ;CFrame.new(-97.0513, 3.69003153, -66.1871414)};
+       Overhead1    = {workspace.Overhead1.In_Use.Value  ;CFrame.new(-95.6423416, 3.50129175, 63.8929062)};
+       Bicep1       = {workspace.Bicep1.In_Use.Value     ;CFrame.new(-108.193413, 3.50129175, 60.8449173)};
+       Squat1       = {workspace.Squat1.In_Use.Value     ;CFrame.new(-118.741066, 3.50129128, 61.4322205)};
+       Bench1       = {workspace.Bench1.In_Use.Value     ;CFrame.new(-130.319031, 3.44129109, 57.6213875)};
     }
     local toolToFarmOn
-    for i,v in pairs( isStrenghtToolUsed() ) do
-        if v == true then
-            toolToFarmOn = v
+    for i,v in pairs( trainingDevice ) do
+        if v[1] == false then
+            toolToFarmOn = i
             break
         end
     end
-    print(toolToFarmOn)
+    
 end
-
-doStreghtAutoFarm()
