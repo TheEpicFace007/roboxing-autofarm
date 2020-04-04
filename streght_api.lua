@@ -32,6 +32,42 @@ setAmountItWillRepeat = function(timeItRepeat)
     end
 end
 
+followPath = function(isShowingBreadcrumb,Position)
+    local PathfindingService = game:GetService("PathfindingService");
+    path = PathfindingService:CreatePath()
+    if typeof(Position) ~= "Vector" then
+        error("ERROR IN #2 : The position must be a Vector",2)
+        return
+    end
+    path:ComputeAsync(HumanoidRootPart.Position,Position)
+    waypoints = {}
+    if path.Status == Enum.Status.Success then
+        waypoints = path:GetWaypoints()
+            if isShowingBreadcrumb then
+                breadcrumb = Instance.new("Folder",workspace)
+                breadcrumb.Name = "breadcrumb"
+            end
+            for _, waypoint in pairs(waypoints) do
+                if isShowingBreadcrumb == true then
+	                local part = Instance.new("Part")
+	                part.Shape = "Ball"
+	                part.Material = "Neon"
+	                part.Size = Vector3.new(0.6, 0.6, 0.6)
+	                part.Position = waypoint.Position
+	                part.Anchored = true
+	                part.CanCollide = false
+                    part.Parent = game.Workspace.breadcrumb
+                end
+                Humanoid:MoveTo(waypoints.Position)
+                Humanoid.MoveToFinished:Wait()
+    end
+
+    else
+        error(" Error (path not found)",0);
+        Humanoid:MoveTo(HumanoidRootPart)
+    end
+end
+
 doStreghtAutoFarm = function()
     trainingDevice = {
        Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047)};
@@ -50,23 +86,6 @@ doStreghtAutoFarm = function()
             break
         end
     end
-    local PathfindingService = game:GetService("PathfindingService")
-    local path = PathfindingService:CreatePath()
-    print( repr( toolToFarmOn ) )
-    path:ComputeAsync(HumanoidRootPart.Position,toolToFarmOn[2])
-    local waypoints = path:GetWaypoints()
-    -- Loop through waypoints
-    local strenghtPath = Instance.new("Folder",workspace)
-    strenghtPath.Name = "strenghtPath"
-    for _, waypoint in pairs(waypoints) do
-	    local part = Instance.new("Part")
-	    part.Shape = "Ball"
-	    part.Material = "Neon"
-	    part.Size = Vector3.new(0.6, 0.6, 0.6)
-	    part.Position = waypoint.Position
-	    part.Anchored = true
-	    part.CanCollide = false
-	    part.Parent = game.Workspace.strenghtPath
-    end
+    
 end
 doStreghtAutoFarm()
