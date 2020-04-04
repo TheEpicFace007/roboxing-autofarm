@@ -46,9 +46,24 @@ doStreghtAutoFarm = function()
     local toolToFarmOn
     for i,v in pairs( trainingDevice ) do
         if v[1] == false then
-            toolToFarmOn = i
+            toolToFarmOn = v
             break
         end
     end
-    
+    local PathfindingService = game:GetService("PathfindingService")
+    local path = PathfindingService:CreatePath()
+    print( repr( toolToFarmOn ) )
+    path:ComputeAsync(HumanoidRootPart.Position,toolToFarmOn[2])
+    path:GetWaypoints()
+    for _, waypoint in pairs(waypoints) do
+        local part = Instance.new("Part")
+        part.Shape = "Ball"
+        part.Material = "Neon"
+        part.Size = Vector3.new(0.6, 0.6, 0.6)
+        part.Position = waypoint.Position
+        part.Anchored = true
+        part.CanCollide = false
+        part.Parent = game.Workspace
+    end
 end
+doStreghtAutoFarm()
