@@ -23,16 +23,6 @@ fireMb1Click = function(btn)
     end
 end
 
-isStrenghtToolUsed = function() 
-    local trainingDevice = {
-        ["workspace.Crunches"]    = workspace.Crunches.In_Use.Value;
-        ['workspace.Leg_Lift']    =  workspace.Leg_Lift.In_Use.Value;
-        ['workspace.Squat_Jumps'] = workspace.Squat_Jumps.In_Use.Value;
-        ['workspace.Push_Ups']    = workspace.Push_Ups.In_Use.Value;
-    }
-    return trainingDevice
-end
-
 -- @timeItRepeat | amount of time it will repat the autofarm useful if you want to train on a specific thing  | intended for slider. if its not used the default value will be 1
 setAmountItWillRepeat = function(timeItRepeat)
     if timeItRepeat < 1 then 
