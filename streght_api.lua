@@ -32,7 +32,7 @@ setAmountItWillRepeat = function(timeItRepeat)
     end
 end
 
-followPath = function(isShowingBreadcrumb,Position)
+pathfind = function(isShowingBreadcrumb,Position)
     local PathfindingService = game:GetService("PathfindingService");
     path = PathfindingService:CreatePath()
     if typeof(Position) ~= "Vector" then
@@ -86,6 +86,6 @@ doStreghtAutoFarm = function()
             break
         end
     end
-    
+
 end
 doStreghtAutoFarm()
