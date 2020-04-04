@@ -1,18 +1,18 @@
 --Game Variable--
-local Players = game:GetService('Players')
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer.PlayerGui
-local PlayerScript = LocalPlayer.PlayerScripts
-local StarterPlayer = game.StarterPlayer
-local StarterPlayerScript = game.StarterPlayer.StarterPlayerScripts
-local StarterCharacterScript= StarterPlayer.StarterCharacterScripts
-local StarterGui = game.StarterGui
-local ReplicatedStorage = game.ReplicatedStorage
-local ReplicatedFirst = game:GetService('ReplicatedFirst')
-local Backpack = LocalPlayer.Backpack
-local Character = LocalPlayer.Character
-local Humanoid = Character.Humanoid
-local HumanoidRootPart = Character.HumanoidRootPart 
+Players = game:GetService('Players')
+LocalPlayer = Players.LocalPlayer
+PlayerGui = LocalPlayer.PlayerGui
+PlayerScript = LocalPlayer.PlayerScripts
+StarterPlayer = game.StarterPlayer
+StarterPlayerScript = game.StarterPlayer.StarterPlayerScripts
+StarterCharacterScript= StarterPlayer.StarterCharacterScripts
+StarterGui = game.StarterGui
+ReplicatedStorage = game.ReplicatedStorage
+ReplicatedFirst = game:GetService('ReplicatedFirst')
+Backpack = LocalPlayer.Backpack
+Character = LocalPlayer.Character
+Humanoid = Character.Humanoid
+HumanoidRootPart = Character.HumanoidRootPart 
 -- return an array that indicate which training device are used and which are not used
 getgenv().strenghtAuto = {}
 getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
