@@ -34,14 +34,14 @@ end
 
 doStreghtAutoFarm = function()
     trainingDevice = {       
-       Crunches     = {workspace.Crunches.In_Use.Value   ;CFrame.new(-142.26973, 3.69035339, -64.4220047)};
-       Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;CFrame.new(-127.155914, 3.69005132, -65.509613)};
-       Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;CFrame.new(-113.031052, 3.69005132, -65.5107956)};
-       Push_Ups     = {workspace.Push_Ups.In_Use.Value   ;CFrame.new(-97.0513, 3.69003153, -66.1871414)};
-       Overhead1    = {workspace.Overhead1.In_Use.Value  ;CFrame.new(-95.6423416, 3.50129175, 63.8929062)};
-       Bicep1       = {workspace.Bicep1.In_Use.Value     ;CFrame.new(-108.193413, 3.50129175, 60.8449173)};
-       Squat1       = {workspace.Squat1.In_Use.Value     ;CFrame.new(-118.741066, 3.50129128, 61.4322205)};
-       Bench1       = {workspace.Bench1.In_Use.Value     ;CFrame.new(-130.319031, 3.44129109, 57.6213875)};
+       Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047)};
+       Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;Vector3.new(-127.155914, 3.69005132, -65.509613)};
+       Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;Vector3.new(-113.031052, 3.69005132, -65.5107956)};
+       Push_Ups     = {workspace.Push_Ups.In_Use.Value   ;Vector3.new(-97.0513, 3.69003153, -66.1871414)};
+       Overhead1    = {workspace.Overhead1.In_Use.Value  ;Vector3.new(-95.6423416, 3.50129175, 63.8929062)};
+       Bicep1       = {workspace.Bicep1.In_Use.Value     ;Vector3.new(-108.193413, 3.50129175, 60.8449173)};
+       Squat1       = {workspace.Squat1.In_Use.Value     ;Vector3.new(-118.741066, 3.50129128, 61.4322205)};
+       Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875)};
     }
     local toolToFarmOn
     for i,v in pairs( trainingDevice ) do
@@ -55,15 +55,6 @@ doStreghtAutoFarm = function()
     print( repr( toolToFarmOn ) )
     path:ComputeAsync(HumanoidRootPart.Position,toolToFarmOn[2])
     path:GetWaypoints()
-    for _, waypoint in pairs(waypoints) do
-        local part = Instance.new("Part")
-        part.Shape = "Ball"
-        part.Material = "Neon"
-        part.Size = Vector3.new(0.6, 0.6, 0.6)
-        part.Position = waypoint.Position
-        part.Anchored = true
-        part.CanCollide = false
-        part.Parent = game.Workspace
-    end
+
 end
 doStreghtAutoFarm()
