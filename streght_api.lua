@@ -2,6 +2,7 @@
 Players = game:GetService('Players')
 LocalPlayer = Players.LocalPlayer
 PlayerGui = LocalPlayer.PlayerGui
+    trainingGui = PlayerGui.Training_Guis
 PlayerScript = LocalPlayer.PlayerScripts
 StarterPlayer = game.StarterPlayer
 StarterPlayerScript = game.StarterPlayer.StarterPlayerScripts
@@ -98,12 +99,11 @@ doStreghtAutoFarm = function()
         if blockedWaypointIndex > currentWaypointIndex then
             if workspace.breadcrumb then
                 workspace.breadcrumb:Destroy()
-                print(debug.traceback(1, "am experimenting pathfind issue, repathing"))
             end
             pathfind(toolToFarmOn[2])
         end
     end
     pathfind(toolToFarmOn[2],true)
-    path.Blocked:Connect(onPathBlocked)
+    repeat wait() until trainingGui.Exercise_Prompt.Exercise_Name ~= ""
+    fireMb1Click(trainingGui.Exercise_Prompt)
 end
-doStreghtAutoFarm()
