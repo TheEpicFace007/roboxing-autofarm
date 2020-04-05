@@ -14,11 +14,11 @@ Backpack = LocalPlayer.Backpack
 Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
--- return an array that indicate which training device are used and which are not used
+
 getgenv().strenghtAuto = {}
 getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
 
-fireMb1Click = function(btn)
+emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
     for _,signal in pairs( getconnections(btn.Activated )) do
         signal:Fire()
@@ -109,7 +109,6 @@ doStreghtAutoFarm = function()
         pathfind(toolToFarmOn[2],true)
         repeat wait() until trainingGui.Exercise_Prompt.Visible == true
         fireMb1Click()
-        warn(debug.traceback(0,"Fired the button"))
     end
 end
 
