@@ -44,7 +44,7 @@ pathfind = function(Position,isShowingBreadcrumb)
     local PathfindingService = game:GetService("PathfindingService");
     path = PathfindingService:CreatePath()
     if typeof(Position) ~= "Vector3" then
-        error("ERROR IN #2 : The position must be a Vector",2)
+        error("ERROR IN #1 : The position must be a Vector",2)
         return
     end
     path:ComputeAsync(HumanoidRootPart.Position,Position)
@@ -98,8 +98,8 @@ doStreghtAutoFarm = function()
         if blockedWaypointIndex > currentWaypointIndex then
             if workspace.breadcrumb then
                 workspace.breadcrumb:Destroy()
+                print(debug.traceback(1, "am experimenting pathfind issue, repathing"))
             end
-            print( repr( debug.getupvalues(1) ) )
             pathfind(toolToFarmOn[2])
         end
     end
