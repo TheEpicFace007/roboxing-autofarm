@@ -19,7 +19,7 @@ getgenv().strenghtAuto = {}
 getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
 
 fireMb1Click = function(btn)
-    for _,signal in pairs( getconnections(btn.MouseButton1Click )) do
+    for _,signal in pairs( getconnections(btn.Activated )) do
         signal:Fire()
     end
 end
@@ -78,7 +78,9 @@ pathfind = function(Position,isShowingBreadcrumb)
 end
 
 doStreghtAutoFarm = function()
-    trainingDevice = {
+    for k = 1,strenghtAuto.timeItRepeat do
+        repeat wait() until Humanoid.WalkSpeed == 16
+        trainingDevice = {
        Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047)};
        Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;Vector3.new(-127.155914, 3.69005132, -65.509613)};
        Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;Vector3.new(-113.031052, 3.69005132, -65.5107956)};
@@ -87,23 +89,26 @@ doStreghtAutoFarm = function()
        Bicep1       = {workspace.Bicep1.In_Use.Value     ;Vector3.new(-108.193413, 3.50129175, 60.8449173)};
        Squat1       = {workspace.Squat1.In_Use.Value     ;Vector3.new(-118.741066, 3.50129128, 61.4322205)};
        Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875)};
-    }
-    local toolToFarmOn
-    for i,v in pairs( trainingDevice ) do
+        }
+        local toolToFarmOn
+        for i,v in pairs( trainingDevice ) do
         if v[1] == false then
             toolToFarmOn = v
             break
         end
-    end
-    onPathBlocked = function(blockedWaypointIndex)
+        end
+        onPathBlocked = function(blockedWaypointIndex)
         if blockedWaypointIndex > currentWaypointIndex then
             if workspace.breadcrumb then
                 workspace.breadcrumb:Destroy()
             end
             pathfind(toolToFarmOn[2])
         end
+        end
+        pathfind(toolToFarmOn[2],true)
+        repeat wait() until trainingGui.Exercise_Prompt.Visible == true ''
+        fireMb1Click(trainingGui.Exercise_Prompt)
     end
-    pathfind(toolToFarmOn[2],true)
-    repeat wait() until trainingGui.Exercise_Prompt.Exercise_Name ~= ""
-    fireMb1Click(trainingGui.Exercise_Prompt)
 end
+
+doStreghtAutoFarm()
