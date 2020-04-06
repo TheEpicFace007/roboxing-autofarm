@@ -76,6 +76,7 @@ pathfind = function(Position,isShowingBreadcrumb)
         Humanoid:MoveTo(HumanoidRootPart.Position)
     end
 end
+
 doStreghtAutoFarm = function()
     local findAvailable = function() --> array {availableDevice: bool;Position: Vector3}
         trainingDevice = {
@@ -95,7 +96,7 @@ doStreghtAutoFarm = function()
                             workspace.Squat1.Player};
             Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875 );
                             workspace.Bench1.Player};
-        }i
+        }
         for i,v in pairs( trainingDevice ) do
             if v[1] == false then
                 return v
@@ -104,22 +105,9 @@ doStreghtAutoFarm = function()
     end
     local isVerbose = true
     for k = 1,timeItRepeat do
-        pathfind(findAvailable()[2],true)
+        local available = findAvailable()
+        pathfind(available[2],true);
         emulateBtnClick(trainingGui.Exercise_Prompt)
-        local timeSinceNoGui = math.floor(tick())
-        debug.traceback()
-        repeat wait()
-            if math.floor(tick()) - timeSinceNoGui > 3 then
-                if isVerbose == true then
-                    warn("It has been more than 3 second with no gui. Trying to show the gui again by jumping.")
-                end
-                Humanoid.Jump = true
-                if trainingGui.Exercise_Prompt.Exercise_Name.Value == "" then
-                    warn("There is no gui. Skipping the repeatation of the streght auto farm.");
-                    return false; -- false mean did not succeed to run  the auto farm
-                end;
-            end
-        until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
     end
     return true;
 end
