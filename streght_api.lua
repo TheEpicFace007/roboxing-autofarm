@@ -15,8 +15,7 @@ Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
 
-getgenv().strenghtAuto = {}
-getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
+timeItRepeat = 2 -- the default step of cycle of the auto farm
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
@@ -77,11 +76,8 @@ pathfind = function(Position,isShowingBreadcrumb)
         Humanoid:MoveTo(HumanoidRootPart.Position)
     end
 end
-
-local blankExerciseLabel = trainingGui.Exercise_Prompt.Exercise_Name
 doStreghtAutoFarm = function()
-    for k = 1,strenghtAuto.timeItRepeat do
-        repeat wait() until Humanoid.WalkSpeed == 16
+    local findAvailable = function() --> array {availableDevice: bool;Position: Vector3}
         trainingDevice = {
             Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047)};
             Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;Vector3.new(-127.155914, 3.69005132, -65.509613)};
@@ -92,26 +88,32 @@ doStreghtAutoFarm = function()
             Squat1       = {workspace.Squat1.In_Use.Value     ;Vector3.new(-118.741066, 3.50129128, 61.4322205)};
             Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875)};
         }
-        local toolToFarmOn
         for i,v in pairs( trainingDevice ) do
             if v[1] == false then
-                toolToFarmOn = v
-                break
+                return v
             end
         end
-        onPathBlocked = function(blockedWaypointIndex)
-        if blockedWaypointIndex > currentWaypointIndex then
-            if workspace.breadcrumb then
-                workspace.breadcrumb:Destroy()
-            end
-            pathfind(toolToFarmOn[2])
-        end
-        end
-        pathfind(toolToFarmOn[2],true)
-        repeat wait()
-        until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
-        emulateBtnClick(trainingGui.Exercise_Prompt)
     end
+    local isVerbose = true
+    for k = 1,timeItRepeat do
+        pathfind(findAvailable()[2],true)
+        emulateBtnClick(trainingGui.Exercise_Prompt)
+        local timeSinceNoGui = math.floor(tick())
+        debug.traceback()
+        repeat wait()
+            if math.floor(tick()) - timeSinceNoGui > 3 then
+                if isVerbose == true then
+                    warn("It has been more than 3 second with no gui. Trying to show the gui again by jumping.")
+                end
+                Humanoid.Jump = true
+                if trainingGui.Exercise_Prompt.Exercise_Name.Value == "" then
+                    warn("There is no gui. Skipping the repeatation of the streght auto farm.");
+                    return false; -- false mean did not succeed to run  the auto farm
+                end;
+            end
+        until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
+    end
+    return true;
 end
 
 doStreghtAutoFarm()
