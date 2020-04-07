@@ -126,9 +126,7 @@ doStreghtAutoFarm = function()
         local timeSinceNoGui = tick()
         repeat wait()
             if tick() - timeSinceNoGui >= 3 then
-                warn(debug.traceback"It has been more than 3 second with no GUI. Attempting to jump to show the GUI.")
                 Humanoid.Jump = true
-                break
             end
         until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
         emulateBtnClick(trainingGui.Exercise_Prompt)
