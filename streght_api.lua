@@ -80,29 +80,31 @@ end
 doStreghtAutoFarm = function()
     for k = 1,strenghtAuto.timeItRepeat do
         repeat wait() until Humanoid.WalkSpeed == 16
-        trainingDevice = {
-            Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047 );
-                            workspace.Crunches.Player};
-            Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;Vector3.new(-127.155914, 3.69005132, -65.509613 );
-                            workspace.Leg_Lift.Player};
-            Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;Vector3.new(-113.031052, 3.69005132, -65.5107956);
-                            workspace.Squat_Jumps.Player};
-            Push_Ups     = {workspace.Push_Ups.In_Use.Value   ;Vector3.new(-97.0513, 3.69003153, -66.1871414   );
-                            workspace.Push_Ups.Player};
-            Overhead1    = {workspace.Overhead1.In_Use.Value  ;Vector3.new(-95.6423416, 3.50129175, 63.8929062 );
-                            workspace.Overhead1.Player};
-            Bicep1       = {workspace.Bicep1.In_Use.Value     ;Vector3.new(-108.193413, 3.50129175, 60.8449173 );
-                            workspace.Bicep1.Player};
-            Squat1       = {workspace.Squat1.In_Use.Value     ;Vector3.new(-118.741066, 3.50129128, 61.4322205 );
-                            workspace.Squat1.Player};
-            Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875 );
-                            workspace.Bench1.Player};
-        }
-        local toolToFarmOn
-        for i,v in pairs( trainingDevice ) do
-            if v[1] == false then
-                toolToFarmOn = v
-                break
+        local findAvailaible = function()
+            trainingDevice = {
+                Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047 );
+                                workspace.Crunches.Player};
+                Leg_Lift     = {workspace.Leg_Lift.In_Use.Value   ;Vector3.new(-127.155914, 3.69005132, -65.509613 );
+                                workspace.Leg_Lift.Player};
+                Squat_Jumps  = {workspace.Squat_Jumps.In_Use.Value;Vector3.new(-113.031052, 3.69005132, -65.5107956);
+                                workspace.Squat_Jumps.Player};
+                Push_Ups     = {workspace.Push_Ups.In_Use.Value   ;Vector3.new(-97.0513, 3.69003153, -66.1871414   );
+                                workspace.Push_Ups.Player};
+                Overhead1    = {workspace.Overhead1.In_Use.Value  ;Vector3.new(-95.6423416, 3.50129175, 63.8929062 );
+                                workspace.Overhead1.Player};
+                Bicep1       = {workspace.Bicep1.In_Use.Value     ;Vector3.new(-108.193413, 3.50129175, 60.8449173 );
+                                workspace.Bicep1.Player};
+                Squat1       = {workspace.Squat1.In_Use.Value     ;Vector3.new(-118.741066, 3.50129128, 61.4322205 );
+                                workspace.Squat1.Player};
+                Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875 );
+                                workspace.Bench1.Player};
+            }
+            local toolToFarmOn
+            for i,v in pairs( trainingDevice ) do
+                if v[1] == false then
+                    toolToFarmOn = v
+                    break
+                end
             end
         end
         onPathBlocked = function(blockedWaypointIndex)
@@ -113,10 +115,14 @@ doStreghtAutoFarm = function()
             pathfind(toolToFarmOn[2])
         end
         end
-        pathfind(toolToFarmOn[2],true)
-        repeat wait()
-        until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
-        emulateBtnClick(trainingGui.Exercise_Prompt)
+        -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE
+        for _ = 1,timeItRepeatSRENGHT do
+            toolToFarmOn = findAvailaible()
+            pathfind(toolToFarmOn[2],true)
+            repeat wait()
+            until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
+            emulateBtnClick(trainingGui.Exercise_Prompt)
+        end
     end
 end
 
