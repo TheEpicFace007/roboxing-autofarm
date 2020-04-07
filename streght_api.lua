@@ -15,7 +15,12 @@ Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
 
+<<<<<<< HEAD
 timeItRepeatSRENGHT = 1 -- the default step of cycle of the auto farm
+=======
+getgenv().strenghtAuto = {}
+getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
+>>>>>>> parent of 567176a... Fix b8ug where it didnt redid the loop[not yet fixed]
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
@@ -77,8 +82,13 @@ pathfind = function(Position,isShowingBreadcrumb)
     end
 end
 
+<<<<<<< HEAD
+=======
+local blankExerciseLabel = trainingGui.Exercise_Prompt.Exercise_Name
+>>>>>>> parent of 567176a... Fix b8ug where it didnt redid the loop[not yet fixed]
 doStreghtAutoFarm = function()
-    local findAvailable = function() --> array {availableDevice: bool;Position: Vector3}
+    for k = 1,strenghtAuto.timeItRepeat do
+        repeat wait() until Humanoid.WalkSpeed == 16
         trainingDevice = {
             Crunches     = {workspace.Crunches.In_Use.Value   ;Vector3.new(-142.26973, 3.69035339, -64.4220047 );
                             workspace.Crunches.Player};
@@ -97,19 +107,26 @@ doStreghtAutoFarm = function()
             Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875 );
                             workspace.Bench1.Player};
         }
+        local toolToFarmOn
         for i,v in pairs( trainingDevice ) do
             if v[1] == false then
-                return v
+                toolToFarmOn = v
+                break
             end
         end
-    end
-    local isVerbose = true
-    for _ = 1,timeItRepeatSRENGHT do
-        local available = findAvailable()
-        pathfind(available[2],true);
+        onPathBlocked = function(blockedWaypointIndex)
+        if blockedWaypointIndex > currentWaypointIndex then
+            if workspace.breadcrumb then
+                workspace.breadcrumb:Destroy()
+            end
+            pathfind(toolToFarmOn[2])
+        end
+        end
+        pathfind(toolToFarmOn[2],true)
+        repeat wait()
+        until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
         emulateBtnClick(trainingGui.Exercise_Prompt)
     end
-    return true;
 end
 
 doStreghtAutoFarm()
