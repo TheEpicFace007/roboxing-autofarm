@@ -101,7 +101,7 @@ doStreghtAutoFarm = function()
         local toolToFarmOn
         for i,v in pairs( trainingDevice ) do
             if v[1] == false then
-                return toolToFarmOn == v
+                return v
             end
         end
     end
