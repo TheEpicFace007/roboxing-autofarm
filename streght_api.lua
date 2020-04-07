@@ -104,7 +104,7 @@ doStreghtAutoFarm = function()
         end
     end
     local isVerbose = true
-    for _ = 1,timeItRepeat do
+    for _ = 1,timeItRepeatSRENGHT do
         local available = findAvailable()
         pathfind(available[2],true);
         emulateBtnClick(trainingGui.Exercise_Prompt)
