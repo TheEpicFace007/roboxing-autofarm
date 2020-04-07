@@ -110,11 +110,9 @@ doStreghtAutoFarm = function()
             if workspace.breadcrumb then
                 destroyBreadcrumb()
             end
-            print(debug.traceback("Blocked. Repathing."))
             pathfind(findAvailaible()[2],true)
         end
     end
-    -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE(Issue #1)
     for _ = 1,timeItRepeatSRENGHT do
         repeat
             wait()
@@ -122,7 +120,6 @@ doStreghtAutoFarm = function()
         toolToFarmOn = findAvailaible()
         local path = pathfind(toolToFarmOn[2],true)
         path.Blocked:Connect(onPathBlocked)
-        print(debug.traceback())
         local timeSinceNoGui = tick()
         repeat wait()
             if tick() - timeSinceNoGui >= 3 then
