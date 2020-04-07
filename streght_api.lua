@@ -82,10 +82,6 @@ pathfind = function(Position,isShowingBreadcrumb)
     end
 end
 
-<<<<<<< HEAD
-=======
-local blankExerciseLabel = trainingGui.Exercise_Prompt.Exercise_Name
->>>>>>> parent of 567176a... Fix b8ug where it didnt redid the loop[not yet fixed]
 doStreghtAutoFarm = function()
     for k = 1,strenghtAuto.timeItRepeat do
         repeat wait() until Humanoid.WalkSpeed == 16
