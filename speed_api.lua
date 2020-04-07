@@ -14,6 +14,7 @@ Backpack = LocalPlayer.Backpack
 Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
+local timeItRepeatSpeed = 1
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
@@ -27,7 +28,7 @@ setAmountItWillRepeatStr = function(timeItRepeat)
     if timeItRepeat < 1 then
         error("error in #1, the number must be equal or bigger than 1")
     else
-        timeItRepeatSRENGHT = timeItRepeat
+        timeItRepeatSpeed = timeItRepeat
     end
 end
 
@@ -74,3 +75,32 @@ pathfind = function(Position,isShowingBreadcrumb)
         Humanoid:MoveTo(HumanoidRootPart.Position)
     end
 end
+
+doSpeedAutoFarm = function()
+    local findAvailable = function() --> array {availableDevice: bool;Position: Vector3}
+        trainingDevice = {
+            Tramp1     = {workspace.Tramp1.In_Use.Value   ;Vector3.new(-144.58, 3.68, 62.54);
+                            workspace.Tramp1.Player};
+            Tramp2     = {workspace.Tramp2.In_Use.Value   ;Vector3.new(-144.73, 3.68, 51.47);
+                            workspace.Tramp2.Player};
+            Tramp3  = {workspace.Tramp3.In_Use.Value;Vector3.new(-142.98, 3.68, 40.14);
+                            workspace.Tramp3.Player};
+            Tramp4     = {workspace.Tramp4.In_Use.Value   ;Vector3.new(-145.60, 3.68, 30.45);
+                            workspace.Tramp4.Player};
+        }
+        for i,v in pairs( trainingDevice ) do
+            if v[1] == false then
+                return v
+            end
+        end
+    end
+    local isVerbose = true
+    for _ = 1,timeItRepeatSpeed do
+        local available = findAvailable()
+        pathfind(available[2],true);
+        emulateBtnClick(trainingGui.Exercise_Prompt)
+    end
+    return true;
+end
+
+doSpeedAutoFarm()
