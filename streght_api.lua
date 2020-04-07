@@ -25,11 +25,11 @@ emulateBtnClick = function(btn)
 end
 
 -- @timeItRepeat | amount of time it will repat the autofarm useful if you want to train on a specific thing  | intended for slider. if its not used the default value will be 1
-setAmountItWillRepeat = function(timeItRepeat)
+setAmountItWillRepeatStr = function(timeItRepeat)
     if timeItRepeat < 1 then
         error("error in #1, the number must be equal or bigger than 1")
     else
-        getgenv().strenghtAuto.timeItRepeat = timeItRepeat
+        timeItRepeatSRENGHT = timeItRepeat
     end
 end
 
