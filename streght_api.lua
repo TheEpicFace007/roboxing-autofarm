@@ -15,7 +15,7 @@ Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
 
-timeItRepeat = 2 -- the default step of cycle of the auto farm
+timeItRepeatSRENGHT = 1 -- the default step of cycle of the auto farm
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
@@ -104,7 +104,7 @@ doStreghtAutoFarm = function()
         end
     end
     local isVerbose = true
-    for k = 1,timeItRepeat do
+    for _ = 1,timeItRepeat do
         local available = findAvailable()
         pathfind(available[2],true);
         emulateBtnClick(trainingGui.Exercise_Prompt)
