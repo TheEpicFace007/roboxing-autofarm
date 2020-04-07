@@ -74,6 +74,7 @@ pathfind = function(Position,isShowingBreadcrumb)
         error("Error: path not found");
         Humanoid:MoveTo(HumanoidRootPart.Position)
     end
+    return path
 end
 
 doSpeedAutoFarm = function()
