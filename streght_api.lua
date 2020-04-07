@@ -75,7 +75,7 @@ pathfind = function(Position,isShowingBreadcrumb)
         error("Error: path not found");
         Humanoid:MoveTo(HumanoidRootPart.Position)
     end
-
+    return path
 end
 
 doStreghtAutoFarm = function()
@@ -115,14 +115,14 @@ doStreghtAutoFarm = function()
         end
     end
     -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE(Issue #1)
-    local PathfindingService = game:GetService("PathfindingService")
     for _ = 1,timeItRepeatSRENGHT do
         repeat
             wait()
         until Humanoid.WalkSpeed == 16
         toolToFarmOn = findAvailaible()
         local path = pathfind(toolToFarmOn[2],true)
-        path.Blocked
+        path.Blocked:Connect(onPathBlocked)
+        print(debug.traceback())
         local timeSinceNoGui = tick()
         repeat wait()
             if tick() - timeSinceNoGui >= 3 then
