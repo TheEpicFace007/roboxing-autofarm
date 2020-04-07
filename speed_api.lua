@@ -94,10 +94,30 @@ doSpeedAutoFarm = function()
             end
         end
     end
-    local isVerbose = true
+    onPathBlocked = function(blockedWaypointIndex)
+        if blockedWaypointIndex > currentWaypointIndex then
+            if workspace.breadcrumb then
+                destroyBreadcrumb()
+            end
+            print(debug.traceback("Blocked. Repathing."))
+            pathfind(findAvailaible()[2],true)
+        end
+    end
+    -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE(Issue #1)
     for _ = 1,timeItRepeatSpeed do
-        local available = findAvailable()
-        pathfind(available[2],true);
+        repeat
+            wait()
+        until Humanoid.WalkSpeed == 16
+        toolToFarmOn = findAvailable()
+        local path = pathfind(toolToFarmOn[2],true)
+        path.Blocked:Connect(onPathBlocked)
+        print(debug.traceback())
+        local timeSinceNoGui = tick()
+        repeat wait()
+            if tick() - timeSinceNoGui >= 3 then
+                Humanoid.Jump = true
+            end
+        until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
         emulateBtnClick(trainingGui.Exercise_Prompt)
     end
     return true;
