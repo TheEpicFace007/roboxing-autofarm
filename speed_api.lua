@@ -106,8 +106,7 @@ doSpeedAutoFarm = function()
     end
     -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE(Issue #1)
     for _ = 1,timeItRepeatSpeed do
-        repeat
-            wait()
+        repeat wait()
         until Humanoid.WalkSpeed == 16
         toolToFarmOn = findAvailable()
         local path = pathfind(toolToFarmOn[2],true)
