@@ -15,7 +15,7 @@ Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
 
-timeItRepeatSRENGHT = 1 -- the default step of cycle of the auto farm
+timeItRepeatSRENGHT = 2 -- the default step of cycle of the auto farm
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
@@ -98,29 +98,35 @@ doStreghtAutoFarm = function()
             Bench1       = {workspace.Bench1.In_Use.Value     ;Vector3.new(-130.319031, 3.44129109, 57.6213875 );
                             workspace.Bench1.Player};
         }
-        local toolToFarmOn
         for i,v in pairs( trainingDevice ) do
             if v[1] == false then
                 return v
             end
         end
     end
-    onPathBlocked = function(blockedWaypointIndex)
-        if blockedWaypointIndex > currentWaypointIndex then
-            if workspace.breadcrumb then
-                workspace.breadcrumb:Destroy()
-            end
-            pathfind(toolToFarmOn[2])
-        end
-    end
     -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE(Issue #1)
     for _ = 1,timeItRepeatSRENGHT do
+
+        repeat
+            wait()
+        until Humanoid.WalkSpeed == 16
         toolToFarmOn = findAvailaible()
+        onPathBlocked = function(blockedWaypointIndex)
+            if blockedWaypointIndex > currentWaypointIndex then
+                if workspace.breadcrumb then
+                    workspace.breadcrumb:Destroy()
+                end
+                print(debug.traceback("Blocked. Repathing."))
+                pathfind(findAvailaible()[2])
+            end
+        end
         pathfind(toolToFarmOn[2],true)
         local timeSinceNoGui = tick()
         repeat wait()
             if tick() - timeSinceNoGui >= 3 then
-                warn("It has been more than 3 second with no GUI. Attempting to jump to show the GUI.")
+                warn(debug.traceback"It has been more than 3 second with no GUI. Attempting to jump to show the GUI.")
+                Humanoid.Jump = true
+                break
             end
         until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
         emulateBtnClick(trainingGui.Exercise_Prompt)
