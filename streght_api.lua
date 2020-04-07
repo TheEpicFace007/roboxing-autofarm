@@ -70,11 +70,12 @@ pathfind = function(Position,isShowingBreadcrumb)
                 Humanoid:MoveTo(waypoint.Position)
                 Humanoid.MoveToFinished:Wait()
             end
-            breadcrumb:Destroy()
+        breadcrumb:Destroy()
     else
         error("Error: path not found");
         Humanoid:MoveTo(HumanoidRootPart.Position)
     end
+
 end
 
 doStreghtAutoFarm = function()
@@ -104,23 +105,24 @@ doStreghtAutoFarm = function()
             end
         end
     end
+    onPathBlocked = function(blockedWaypointIndex)
+        if blockedWaypointIndex > currentWaypointIndex then
+            if workspace.breadcrumb then
+                destroyBreadcrumb()
+            end
+            print(debug.traceback("Blocked. Repathing."))
+            pathfind(findAvailaible()[2],true)
+        end
+    end
     -- TODO : FIX UP THE THING WHERE I CAN'T LOOP TWO OR MORE CYCLE(Issue #1)
+    local PathfindingService = game:GetService("PathfindingService")
     for _ = 1,timeItRepeatSRENGHT do
-
         repeat
             wait()
         until Humanoid.WalkSpeed == 16
         toolToFarmOn = findAvailaible()
-        onPathBlocked = function(blockedWaypointIndex)
-            if blockedWaypointIndex > currentWaypointIndex then
-                if workspace.breadcrumb then
-                    workspace.breadcrumb:Destroy()
-                end
-                print(debug.traceback("Blocked. Repathing."))
-                pathfind(findAvailaible()[2])
-            end
-        end
-        pathfind(toolToFarmOn[2],true)
+        local path = pathfind(toolToFarmOn[2],true)
+        path.Blocked
         local timeSinceNoGui = tick()
         repeat wait()
             if tick() - timeSinceNoGui >= 3 then
