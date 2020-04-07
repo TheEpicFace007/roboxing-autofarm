@@ -15,12 +15,7 @@ Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
 
-<<<<<<< HEAD
 timeItRepeatSRENGHT = 1 -- the default step of cycle of the auto farm
-=======
-getgenv().strenghtAuto = {}
-getgenv().strenghtAuto.timeItRepeat = 1 -- the default step of cycle of the auto farm
->>>>>>> parent of 567176a... Fix b8ug where it didnt redid the loop[not yet fixed]
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
