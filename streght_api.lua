@@ -15,7 +15,7 @@ Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
 
-timeItRepeatSRENGHT = 2 -- the default step of cycle of the auto farm
+timeItRepeatSRENGHT = 5 -- the default step of cycle of the auto farm
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")

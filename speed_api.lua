@@ -14,7 +14,8 @@ Backpack = LocalPlayer.Backpack
 Character = LocalPlayer.Character
 Humanoid = Character.Humanoid
 HumanoidRootPart = Character.HumanoidRootPart
-local timeItRepeatSpeed = 1
+local TestService = game:GetService("TestService")
+local timeItRepeatSpeed = 10
 
 emulateBtnClick = function(btn)
     assert(btn,"Missing argument #1, must specify a btn")
@@ -71,8 +72,7 @@ pathfind = function(Position,isShowingBreadcrumb)
             end
             breadcrumb:Destroy()
     else
-        error("Error: path not found");
-        Humanoid:MoveTo(HumanoidRootPart.Position)
+        pathfind(Position,isShowingBreadcrumb)
     end
     return path
 end
@@ -88,6 +88,14 @@ doSpeedAutoFarm = function()
                             workspace.Tramp3.Player};
             Tramp4     = {workspace.Tramp4.In_Use.Value   ;Vector3.new(-145.60, 3.68, 30.45);
                             workspace.Tramp4.Player};
+            Punch_Bag1     = {workspace.Punch_Bag1.In_Use.Value   ;Vector3.new(-141.53, 3.50, -30.33);
+                               workspace.Punch_Bag1.Player};
+            Punch_Bag2     = {workspace.Punch_Bag2.In_Use.Value   ;Vector3.new(-141.84, 3.50, -37.59);
+                             workspace.Punch_Bag2.Player};
+            Speed_Bag1     = {workspace.Speed_Bag1.In_Use.Value   ;Vector3.new(-144.05, 3.50, -45.11);
+                             workspace.Speed_Bag1.Player};
+            Speed_Bag2    = {workspace.Speed_Bag2.In_Use.Value   ;Vector3.new(-144.83, 3.50, -52.12);
+                             workspace.Speed_Bag2.Player};
         }
         for i,v in pairs( trainingDevice ) do
             if v[1] == false then
@@ -101,23 +109,33 @@ doSpeedAutoFarm = function()
                 destroyBreadcrumb()
             end
             pathfind(findAvailaible()[2],true)
+            print(debug.traceback("Blocked, trying to find another path"))
         end
     end
-    for _ = 1,timeItRepeatSpeed do
+    for i = 1,timeItRepeatSpeed do
+        TestService:Message(debug.traceback(Humanoid.WalkSpeed))
         repeat wait()
+            --print("Waiting for the grinding to stop.")
         until Humanoid.WalkSpeed == 16
         toolToFarmOn = findAvailable()
         local path = pathfind(toolToFarmOn[2],true)
         path.Blocked:Connect(onPathBlocked)
+        print("Connected")
         local timeSinceNoGui = tick()
         repeat wait()
             if tick() - timeSinceNoGui >= 3 then
+                local timeSinceStillNoGui = tick()
+                if timeSinceStillNoGui > 15 then
+                    warn"Did not found any gui for 15 second. Skipping the speed auto farm"
+                    return false
+                end
                 Humanoid.Jump = true
             end
         until trainingGui.Exercise_Prompt.Exercise_Name.Value ~= ""
         emulateBtnClick(trainingGui.Exercise_Prompt)
+        wait(1)
     end
     return true;
 end
 
-doSpeedAutoFarm()
+print(doSpeedAutoFarm())
